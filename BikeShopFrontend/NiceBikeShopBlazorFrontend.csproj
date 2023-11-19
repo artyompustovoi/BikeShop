@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="MudBlazor" Version="6.0.13" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\NiceBikeShop.HttpApiClient\NiceBikeShop.HttpApiClient.csproj" />
+	  <ProjectReference Include="..\NiceBikeShop.Models\NiceBikeShop.Models.csproj" />
+	</ItemGroup>
+	
+	
+</Project>

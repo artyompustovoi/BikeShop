@@ -1,0 +1,23 @@
+﻿@page "/cart"
+@inject ICatalog catalog
+@inject ICart cart
+
+<h3>CartPage</h3>
+
+@if (_purchases.Count == 0)
+{
+    <p>Ваша корзина пуста</p>
+}
+
+ <ul>
+    @foreach (var _product in _purchases)
+    {
+        @* <ProductCard product="@_product"></ProductCard> *@
+        //<MudButton onclick="deletePurchase(_product.Id)">Add to cart</MudButton>
+        <MudButton OnClick="()=> cart.deletePurchase(_product)">Delete from cart</MudButton>
+    }
+</ul>
+
+@code {
+ 
+}

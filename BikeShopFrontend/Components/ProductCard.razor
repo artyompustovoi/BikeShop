@@ -1,0 +1,28 @@
+﻿@* @page "/" *@
+@inject ICatalog catalog
+@inject NiceBikeShop.HttpApiClient.NiceBikeShopClient apiClient
+@using Product = NiceBikeShopBackend.Data.Product;
+
+
+@if (product is not null)
+{
+    imageSource = $"ProductImages/{product.Name}.jpg";
+    <a href=/ProductInfo/@product.Id>
+        <p> @product.Name  @product.Price @product.categoryId</p>
+        @if (imageSource is not null)
+        {
+            <p>
+                <img class="productImg" src="@imageSource" />
+            </p>
+        }
+    </a>
+    <MudButton><a href=/editProduct/@product.Id>Edit</a></MudButton>
+    <MudButton OnClick="()=>apiClient.DeleteProductAsync(product)">Delete</MudButton>
+}
+
+
+@code {
+    [Parameter]
+    public Product product { get; set; }
+    private string? imageSource;
+}

@@ -1,0 +1,19 @@
+﻿@page "/ProductInfo/{ProductId:guid}" 
+@inject ICatalog catalog
+@inject ICart cart
+@inject NiceBikeShop.HttpApiClient.NiceBikeShopClient apiClient
+@using Product = NiceBikeShopBackend.Data.Product;
+<h4>Страница товара</h4>
+<ProductCard product="@_product"></ProductCard>
+@* <MudButton OnClick="()=> cart.addProductToCart(_product)">Add to cart</MudButton> *@
+
+
+
+@code {
+
+    private string? imageSource;
+    
+}
+
+
+

@@ -1,0 +1,117 @@
+﻿@inject ICatalog catalog
+@page "/addProduct"
+@using System.ComponentModel.DataAnnotations
+@using Product = NiceBikeShopBackend.Data.Product;
+@inject NiceBikeShop.HttpApiClient.NiceBikeShopClient apiClient
+
+
+
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="12">
+            <MudCard>
+                <MudCardContent>
+                    @* <MudTextField Label="Product name" HelperText="Max. 8 characters" Class="mt-3"
+                    @bind-Value="p.Name" For="@(() =>  model.Productname)" /> *@
+
+                    <MudTextField Label="Product name" Class="mt-3"
+                    @bind-Value="p.Name" For="@(() =>  model.Productname)" />
+
+                    <MudTextField Label="Price" Class="mt-3"
+                    @bind-Value="p.Price" For="@(() =>  model.Price)" />
+                    <MudTextField Label="Category" HelperText="Choose a strong password" Class="mt-3"
+                    @bind-Value="p.categoryId" For="@(() => model.Category)" />
+                    <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                        <ButtonTemplate>
+                            <MudFab HtmlTag="label"
+                                    Color="Color.Secondary"
+                                    Icon="@Icons.Material.Filled.Image"
+                                    Label="Load picture"
+                                    for="@context" />
+                        </ButtonTemplate>
+                    </MudFileUpload>
+
+                    @if (files != null)
+                    {
+                        <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                        <MudList>
+                            @foreach (var file in files)
+                            {
+                                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+                                    @file.Name <code>@file.Size bytes</code>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+      
+        <br />
+        <MudPaper>
+            <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+            @if (success)
+            {
+                <MudText Color="Color.Success">Success</MudText>
+            }
+            else
+            {
+                <MudText Color="@Color.Error">
+                    <ValidationSummary />
+                </MudText>
+            }
+        </MudPaper>
+       @*  <MudItem xs="12">
+            <MudText Typo="Typo.body2" Align="Align.Center">
+                Fill out the form correctly to see the success message.
+            </MudText>
+        </MudItem> *@
+    </MudGrid>
+</EditForm>
+
+
+@code {
+    RegisterAccountForm model = new RegisterAccountForm();
+    bool success;
+
+    public class RegisterAccountForm
+    {
+        //
+        //[StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
+        [Required]
+        public string Productname { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+
+        [Required]
+        //[StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
+        public int Category { get; set; }
+
+        public RegisterAccountForm()
+        {
+            Productname = "Bike";
+        }
+
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        success = true;
+        StateHasChanged();
+        await apiClient.AddNewProducAsync(p);
+    }
+    Product p = new Product(Guid.NewGuid(), "Bike", 0, 0);
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+    private void UploadFiles(IBrowserFile file)
+    {
+        files.Add(file);
+        //TODO upload the files to the server
+    }
+}

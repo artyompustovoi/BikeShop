@@ -1,0 +1,16 @@
+﻿.productImg {
+    width: 24%;
+}
+
+.productPageImg {
+    width: 40%;
+}
+
+p {
+    color: darkorange;
+}
+
+.head{
+    padding:1;
+    margin-top:1;
+}

@@ -1,0 +1,37 @@
+﻿@page "/catalog"
+@* @inject ICatalog catalog *@
+@inject ICart cart
+@inject NiceBikeShop.HttpApiClient.NiceBikeShopClient apiClient
+<h3>CatalogPage</h3>
+<MudGrid>
+    <MudItem xs="12">
+        <MudSelect T="string" MultiSelection="true" SelectAll="true" SelectAllText="Select all Categories" 
+                   Label="Category" AdornmentIcon="@Icons.Material.Filled.Search" SelectedValuesChanged="OnSelectedValuesChanged">
+            @foreach (var con in categories.Select(x => x.CategoryName).Distinct())
+            {
+                <MudSelectItem T="string" Value="@con">@con</MudSelectItem>
+            }
+        </MudSelect>
+
+
+    </MudItem>
+    <MudItem xs="12">
+        <br /><br />
+     
+        <ul>
+            @foreach (var _product in prod)
+            {
+                <li><ProductCard product="@_product"></ProductCard></li>
+                
+               
+                
+            }
+        </ul>
+
+    </MudItem>
+</MudGrid>
+
+@code {
+  
+   
+}
